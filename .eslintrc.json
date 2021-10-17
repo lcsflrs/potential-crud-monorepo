@@ -1,0 +1,22 @@
+{
+  "env": {
+    "es2020": true,
+    "node": true
+  },
+  "extends": ["prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "vars": "all" }],
+    "quotes": "error",
+    "semi": ["error", "never"],
+    "object-shorthand": "error",
+    "curly": "error",
+    "eqeqeq": "error"
+  }
+}

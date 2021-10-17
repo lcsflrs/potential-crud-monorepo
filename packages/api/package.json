@@ -1,0 +1,10 @@
+{
+  "name": "@potential-crud/api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node ./server.js"
+  },
+  "dependencies": {
+    "json-server": "^0.17.0"
+  }
+}

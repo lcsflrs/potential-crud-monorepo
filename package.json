@@ -1,0 +1,36 @@
+{
+  "name": "potential-crud",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "delete-node-modules": "npx rimraf node_modules/ packages/*/node_modules",
+    "reset": "yarn delete-node-modules && yarn install",
+    "api": "yarn workspace @potential-crud/api",
+    "web": "yarn workspace @potential-crud/web"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/api",
+      "packages/web"
+    ]
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.7",
+    "@graphql-codegen/typescript": "^1.23.0",
+    "@graphql-codegen/typescript-graphql-request": "^3.2.5",
+    "@graphql-codegen/typescript-operations": "^1.18.4",
+    "@graphql-codegen/typescript-react-apollo": "^2.3.1",
+    "@graphql-codegen/typescript-resolvers": "^1.20.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2",
+    "typescript": "4.4.2"
+  }
+}

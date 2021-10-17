@@ -1,0 +1,28 @@
+{
+  "developers": [
+    {
+      "id": 1,
+      "nome": "Lucas Flores",
+      "idade": 24,
+      "sexo": "M",
+      "hobby": "Jogar",
+      "dataNascimento": "18/10/1996"
+    },
+    {
+      "id": 2,
+      "nome": "Sharkao",
+      "idade": 25,
+      "sexo": "M",
+      "hobby": "Tomar uma",
+      "dataNascimento": "18/10/1996"
+    },
+    {
+      "nome": "Teste Completo",
+      "idade": 42,
+      "sexo": "M",
+      "hobby": "Correr",
+      "dataNascimento": "18/10/1996",
+      "id": 3
+    }
+  ]
+}
