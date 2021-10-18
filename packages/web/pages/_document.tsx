@@ -7,6 +7,8 @@ export default class MyDocument extends Document {
     return (
       <Html lang="pt-BR">
         <Head>
+          <title>Me Contrata - Não perca essa oportunidade!</title>
+          <meta name="description" content="Feito por Lucas Flores" />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           {/* Fonts */}
           <link
