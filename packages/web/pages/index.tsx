@@ -1,7 +1,6 @@
 import { Flex } from "@chakra-ui/layout"
 import type { NextPage } from "next"
 import { useState } from "react"
-import useDebouncedState from "../src/hooks/useDebouncedState"
 import Background from "../src/pages/main/components/Background"
 import FirstSection from "../src/pages/main/containers/FirstSection"
 import Header from "../src/pages/main/containers/Header"
@@ -10,7 +9,7 @@ import { Developer } from "../src/pages/main/types"
 
 const Home: NextPage = () => {
   const [listaMembros, setListaMembros] = useState<Developer[]>([])
-  const [termo, setTermo] = useDebouncedState("")
+  const [termo, setTermo] = useState("")
   return (
     <Flex
       height="100vh"

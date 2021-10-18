@@ -8,7 +8,7 @@ import { Select } from "@chakra-ui/select"
 import { Tooltip } from "@chakra-ui/tooltip"
 import { Collapse } from "@chakra-ui/transition"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { AiFillFilter } from "react-icons/ai"
+import { AiFillFilter, AiOutlineClear } from "react-icons/ai"
 import api from "../../../api"
 import CardList from "../../../components/CardList"
 import NoResultMessage from "../../../components/NoResultMessage"
@@ -23,9 +23,15 @@ interface Props {
 
 const SecondSection = ({ listaMembros, setListaMembros, setTermo, termo }: Props) => {
   const [loading, setLoading] = useState(false)
-  const { onToggle, isOpen } = useDisclosure()
+  const { onToggle, isOpen, onClose } = useDisclosure()
   const [notFound, setNotFound] = useState(false)
   const [filterSexo, setFilterSexo] = useState("")
+
+  const handleLimparFiltros = () => {
+    onClose()
+    setFilterSexo("")
+    setTermo("")
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -73,12 +79,12 @@ const SecondSection = ({ listaMembros, setListaMembros, setTermo, termo }: Props
             <Tooltip label="Filtrar" fontSize="md">
               <Button
                 size="lg"
-                leftIcon={<AiFillFilter />}
-                onClick={onToggle}
+                leftIcon={!!termo || !!filterSexo ? <AiOutlineClear /> : <AiFillFilter />}
+                onClick={!!termo || !!filterSexo ? handleLimparFiltros : onToggle}
                 colorScheme="main"
                 variant="outline"
               >
-                Filtrar
+                {!!termo || !!filterSexo ? "Limpar" : "Filtrar"}
               </Button>
             </Tooltip>
           </Flex>
@@ -89,6 +95,7 @@ const SecondSection = ({ listaMembros, setListaMembros, setTermo, termo }: Props
                 size="lg"
                 width="50%"
                 placeholder="Digite o id"
+                value={termo}
               />
               <Select
                 value={filterSexo}
@@ -107,21 +114,26 @@ const SecondSection = ({ listaMembros, setListaMembros, setTermo, termo }: Props
           <Divider />
         </div>
         {loading && (
-          <Center p={12}>
-            <CircularProgress isIndeterminate color="main" />
+          <Center p={24}>
+            <CircularProgress isIndeterminate color="#202932" />
           </Center>
         )}
         {!loading && listaMembros.length === 0 && (
-          <NoResultMessage
-            title={
-              notFound ? "Não foi encontrado nenhum dev" : "Ainda não temos devs em nossa equipe"
-            }
-            message={
-              notFound
-                ? "Altere os termos de pesquisa e tente novamente"
-                : "Preencha o formulário acima e aumente nossa equipe!"
-            }
-          />
+          <Stack spacing={4}>
+            <NoResultMessage
+              title={
+                notFound ? "Não foi encontrado nenhum dev" : "Ainda não temos devs em nossa equipe"
+              }
+              message={
+                notFound
+                  ? "Altere os termos de pesquisa e tente novamente"
+                  : "Preencha o formulário acima e aumente nossa equipe!"
+              }
+            />
+            <Button onClick={handleLimparFiltros} variant="ghost">
+              Limpar Filtros
+            </Button>
+          </Stack>
         )}
         {!loading &&
           listaMembros.map((dev) => {
