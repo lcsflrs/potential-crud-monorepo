@@ -1,10 +1,10 @@
 import { Button } from "@chakra-ui/button"
 import { Input } from "@chakra-ui/input"
-import { Badge, Flex, Grid, GridItem, Heading, Stack, Text } from "@chakra-ui/layout"
+import { Badge, Container, Flex, Heading, Stack, Text } from "@chakra-ui/layout"
 import { Select } from "@chakra-ui/select"
 import { useToast } from "@chakra-ui/toast"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { differenceInYears, parse } from "date-fns"
+import { differenceInYears, isBefore, isValid, parse } from "date-fns"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import ReactInputMask from "react-input-mask"
@@ -20,7 +20,20 @@ interface Props {
 const schema = yup.object({
   nome: yup.string().required("Campo obrigatório!"),
   sexo: yup.string().required("Campo obrigatório!"),
-  dataNascimento: yup.string().required("Campo obrigatório!"),
+  dataNascimento: yup
+    .string()
+    .required("Campo obrigatório!")
+    .test("data-valida", "Data inválida!", (value) => {
+      if (!value) {
+        return false
+      }
+      let date = parse(value, "dd/MM/yyyy", new Date())
+      if (!isValid(date)) {
+        return false
+      }
+      const hoje = new Date()
+      return isBefore(date, hoje)
+    }),
   hobby: yup.string(),
 })
 
@@ -37,10 +50,8 @@ const FirstSection = ({ setListaMembros, termo }: Props) => {
   const toast = useToast()
 
   const onSubmit = handleSubmit((values) => {
-    console.log(values)
     const { dataNascimento, hobby, nome, sexo } = values
     const firstName = nome ? nome.split(" ")[0] : ""
-    console.log(parse(dataNascimento, "dd/MM/yyyy", new Date()))
     api
       .post("/", {
         nome,
@@ -69,16 +80,20 @@ const FirstSection = ({ setListaMembros, termo }: Props) => {
   })
 
   return (
-    <Grid
-      mt="10rem"
-      templateColumns="60% 40%"
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-    >
-      {/* Parte */}
-      <GridItem>
-        <Flex justifyContent="center" alignItems="flex-start" direction="column">
+    <Container maxW="container.xl" padding={{ base: 0, md: 12 }}>
+      <Flex
+        direction={{ base: "column", md: "row" }}
+        justifyContent="space-between"
+        alignItems="center"
+        width="100%"
+      >
+        {/* Parte */}
+        <Flex
+          padding={{ base: 12, md: 0 }}
+          justifyContent="center"
+          alignItems="flex-start"
+          direction="column"
+        >
           <Heading mb={2} color="#202932">
             Uma boa equipe é fundamental <br />
             para o desenvolvimento de qualquer projeto
@@ -87,17 +102,21 @@ const FirstSection = ({ setListaMembros, termo }: Props) => {
             Preencha os campos ao lado para aumentar nossa equipe.
           </Text>
         </Flex>
-      </GridItem>
-      {/* Parte */}
-      <GridItem>
+        {/* Parte */}
         <Flex
-          justifyContent="center"
+          justifyContent={{ base: "center", md: "flex-end" }}
           // background="blue"
           alignItems="center"
-          marginLeft={12}
+          marginLeft={{ base: 0, md: 12 }}
         >
           <form onSubmit={onSubmit}>
-            <Flex background="white" width="24rem" rounded={12} shadow="dark-lg" direction="column">
+            <Flex
+              background="white"
+              width={{ base: "22rem", md: "24rem" }}
+              rounded={12}
+              shadow="dark-lg"
+              direction="column"
+            >
               <Stack spacing={4} width="100%" padding={8}>
                 <Flex direction="column" width="100%">
                   <Text mb={2} display="inline">
@@ -168,8 +187,8 @@ const FirstSection = ({ setListaMembros, termo }: Props) => {
             </Flex>
           </form>
         </Flex>
-      </GridItem>
-    </Grid>
+      </Flex>
+    </Container>
   )
 }
 

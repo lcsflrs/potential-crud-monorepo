@@ -1,10 +1,10 @@
-import { Flex, Heading } from "@chakra-ui/layout"
+import { Container, Heading } from "@chakra-ui/layout"
 
 const Header = () => {
   return (
-    <Flex width="60%" paddingY={12}>
+    <Container maxW="container.xl" padding={12}>
       <Heading>Me Contrata</Heading>
-    </Flex>
+    </Container>
   )
 }
 

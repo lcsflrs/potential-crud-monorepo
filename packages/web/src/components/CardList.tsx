@@ -4,6 +4,7 @@ import { useDisclosure } from "@chakra-ui/hooks"
 import Icon from "@chakra-ui/icon"
 import { Input } from "@chakra-ui/input"
 import { Divider, Flex, Stack, Text } from "@chakra-ui/layout"
+import { useMediaQuery } from "@chakra-ui/media-query"
 import {
   Popover,
   PopoverArrow,
@@ -18,7 +19,7 @@ import { useToast } from "@chakra-ui/toast"
 import { Tooltip } from "@chakra-ui/tooltip"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { differenceInYears, parse } from "date-fns"
-import { FocusEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { AiFillHeart, AiOutlineDelete, AiOutlineEdit, AiOutlineHeart } from "react-icons/ai"
 import * as yup from "yup"
@@ -42,6 +43,7 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
   const [isEditing, setIsEditing] = useState(false)
   const { onOpen, onClose, isOpen } = useDisclosure()
   const [putDev, setPutDev] = useState<Developer | undefined>()
+  const [isSmallerThanMD] = useMediaQuery("(max-width: 48em)")
 
   const toast = useToast()
 
@@ -57,10 +59,15 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
 
   const toggleEdit = () => setIsEditing(!isEditing)
 
-  const handleFocus = (event: FocusEvent<HTMLButtonElement, Element>) => {
+  const handleLike = () => {
     setIsLikePress(true)
-    setTimeout(() => setIsLikePress(false), 142)
-    event.target.blur()
+    toast({
+      title: `Você incentivou ${firstName}!`,
+      description: `${sexo === "F" ? "Ela" : "Ele"} agradece por isso!`,
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+    })
   }
 
   const { id, nome, hobby, idade, sexo, dataNascimento } = developer
@@ -68,7 +75,6 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
   const firstName = nome ? nome.split(" ")[0] : ""
 
   useEffect(() => {
-    console.log(developer)
     setValue("dataNascimento", dataNascimento)
     setValue("hobby", hobby)
     setValue("sexo", sexo)
@@ -88,9 +94,7 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
   }
 
   const onSubmit = handleSubmit((values) => {
-    console.log(values)
     const { dataNascimento, hobby, nome, sexo } = values
-    console.log(parse(dataNascimento, "dd/MM/yyyy", new Date()))
     api
       .put(`/${id}`, {
         nome,
@@ -115,8 +119,8 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
 
   return (
     <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-      <Flex paddingX={12} paddingY={8}>
-        <Avatar size="2xl" />
+      <Flex paddingX={{ base: 0, md: 12 }} paddingY={8}>
+        {!isSmallerThanMD && <Avatar size="2xl" />}
         <Flex justifyContent={isEditing ? "flex-end" : "space-between"} width="100%">
           {isEditing ? (
             <form onSubmit={onSubmit}>
@@ -168,8 +172,13 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
               </Flex>
             </Flex>
           )}
-          <Flex direction="column" alignItems="flex-end" justifyContent="space-between">
-            <Flex direction="row">
+          <Flex
+            direction="column"
+            alignItems="flex-end"
+            justifyContent="space-between"
+            mr={{ base: 8, md: 0 }}
+          >
+            <Flex direction={isSmallerThanMD ? "column" : "row"} alignItems="flex-end">
               <PopoverTrigger>
                 <div>
                   <Tooltip label={`Remover ${firstName}`} fontSize="md">
@@ -177,7 +186,7 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
                       aria-label={`Remover ${firstName}`}
                       background="white"
                       icon={<Icon fontSize="2xl" as={AiOutlineDelete} color="red.500" />}
-                      mr={4}
+                      mr={{ base: 0, md: 4 }}
                       disabled={isEditing}
                       onClick={onOpen}
                     />
@@ -202,11 +211,11 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
                   <Icon
                     fontSize="2xl"
                     as={isLikePress ? AiFillHeart : AiOutlineHeart}
-                    color="#202932"
+                    color={isLikePress ? "red.500" : "main"}
                   />
                 }
+                onClick={handleLike}
                 disabled={isEditing}
-                onFocus={handleFocus}
               />
             </Tooltip>
           </Flex>
