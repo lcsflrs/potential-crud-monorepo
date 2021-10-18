@@ -67,6 +67,15 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
     setValue("nome", nome)
   }, [])
 
+  useEffect(() => {
+    if (!!putDev) {
+      setValue("dataNascimento", dataNascimento)
+      setValue("hobby", putDev.hobby)
+      setValue("sexo", putDev.sexo)
+      setValue("nome", putDev.nome)
+    }
+  }, [putDev])
+
   const toggleEdit = () => setIsEditing(!isEditing)
 
   const handleLike = () => {
@@ -159,13 +168,19 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
                 <Text fontSize="2xl">{!!putDev ? putDev.nome : nome}</Text>
                 <Text fontSize="lg">{`${idade} anos`}</Text>
               </Flex>
-              <Flex width="100%" justifyContent={hobby ? "space-between" : "flex-end"}>
-                {hobby && (
-                  <Text fontSize="lg">{`Adora ${(!!putDev
-                    ? putDev.hobby
-                    : hobby
-                  ).toLowerCase()}`}</Text>
-                )}
+              <Flex
+                width="100%"
+                justifyContent={
+                  hobby || (!!putDev && !!putDev.hobby) ? "space-between" : "flex-end"
+                }
+              >
+                {hobby ||
+                  (!!putDev && !!putDev.hobby && (
+                    <Text fontSize="lg">{`Adora ${(!!putDev
+                      ? putDev.hobby
+                      : hobby
+                    ).toLowerCase()}`}</Text>
+                  ))}
                 <Text fontSize="lg">{`ID: ${id}`}</Text>
               </Flex>
             </Flex>
