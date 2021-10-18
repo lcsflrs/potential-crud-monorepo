@@ -38,6 +38,8 @@ const schema = yup.object({
 })
 
 const FirstSection = ({ setListaMembros, termo }: Props) => {
+  const toast = useToast()
+
   const {
     register,
     handleSubmit,
@@ -47,7 +49,6 @@ const FirstSection = ({ setListaMembros, termo }: Props) => {
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   })
-  const toast = useToast()
 
   const onSubmit = handleSubmit((values) => {
     const { dataNascimento, hobby, nome, sexo } = values
@@ -87,7 +88,7 @@ const FirstSection = ({ setListaMembros, termo }: Props) => {
         alignItems="center"
         width="100%"
       >
-        {/* Parte */}
+        {/* Parte Esquerda */}
         <Flex
           padding={{ base: 12, md: 0 }}
           justifyContent="center"
@@ -102,10 +103,10 @@ const FirstSection = ({ setListaMembros, termo }: Props) => {
             Preencha os campos ao lado para aumentar nossa equipe.
           </Text>
         </Flex>
-        {/* Parte */}
+
+        {/* Parte Direita*/}
         <Flex
           justifyContent={{ base: "center", md: "flex-end" }}
-          // background="blue"
           alignItems="center"
           marginLeft={{ base: 0, md: 12 }}
         >

@@ -44,8 +44,11 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
   const { onOpen, onClose, isOpen } = useDisclosure()
   const [putDev, setPutDev] = useState<Developer | undefined>()
   const [isSmallerThanMD] = useMediaQuery("(max-width: 48em)")
-
   const toast = useToast()
+
+  const { id, nome, hobby, idade, sexo, dataNascimento } = developer
+
+  const firstName = nome ? nome.split(" ")[0] : ""
 
   const {
     register,
@@ -56,6 +59,13 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   })
+
+  useEffect(() => {
+    setValue("dataNascimento", dataNascimento)
+    setValue("hobby", hobby)
+    setValue("sexo", sexo)
+    setValue("nome", nome)
+  }, [])
 
   const toggleEdit = () => setIsEditing(!isEditing)
 
@@ -69,17 +79,6 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
       isClosable: true,
     })
   }
-
-  const { id, nome, hobby, idade, sexo, dataNascimento } = developer
-
-  const firstName = nome ? nome.split(" ")[0] : ""
-
-  useEffect(() => {
-    setValue("dataNascimento", dataNascimento)
-    setValue("hobby", hobby)
-    setValue("sexo", sexo)
-    setValue("nome", nome)
-  }, [])
 
   const removerMembro = (id: number) => {
     api.delete(`/${id}`)
@@ -134,7 +133,6 @@ const CardList = ({ developer, onRemoverMembro }: Props) => {
                 />
                 <Stack spacing={4} direction="row">
                   <Input
-                    // as={ReactInputMask}
                     mask="99/99/9999"
                     placeholder="Data de Nascimento"
                     variant="filled"

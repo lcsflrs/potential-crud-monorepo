@@ -27,12 +27,6 @@ const SecondSection = ({ listaMembros, setListaMembros, setTermo, termo }: Props
   const [notFound, setNotFound] = useState(false)
   const [filterSexo, setFilterSexo] = useState("")
 
-  const handleLimparFiltros = () => {
-    onClose()
-    setFilterSexo("")
-    setTermo("")
-  }
-
   useEffect(() => {
     setLoading(true)
     const arrayAuxiliar: Developer[] = [] // Utilizado para auxiliar o manejo do `data` que vem da requisição
@@ -55,6 +49,12 @@ const SecondSection = ({ listaMembros, setListaMembros, setTermo, termo }: Props
       })
       .finally(() => setLoading(false))
   }, [termo, filterSexo])
+
+  const handleLimparFiltros = () => {
+    onClose()
+    setFilterSexo("")
+    setTermo("")
+  }
 
   const handleRemoverMembro = (id: number) => {
     setListaMembros((prevState) => {
