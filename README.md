@@ -8,7 +8,7 @@ Deploy da API feita através do Heroku e deploy do site feito usando Netlify.<br
 
 
 ## Backend:
-O backend foi feito em Node e foi utuilizado a biblitioca json-server como banco de dados, devido a sua fácil implementação. Não tive muito tempo disponível para implementar a aplicação então optei por deixar a API bem simples para não tomar muito tempo.<br /><br />
+O backend foi feito em Node e foi utilizado a biblioteca json-server como banco de dados, devido a sua fácil implementação. Não tive muito tempo disponível para implementar a aplicação então optei por deixar a API bem simples para não tomar muito tempo.<br /><br />
 
 
 ## Frontend:
