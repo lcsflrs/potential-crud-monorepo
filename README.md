@@ -12,7 +12,7 @@ O backend foi feito em Node e foi utilizado a biblioteca json-server como banco 
 
 
 ## Frontend:
-O frontend foi desenvolvido em NextJS utilizando a bibliotca Chakra UI para implementação dos componentes. O frontend consome todos os endpoints da API. Testes não implementados devido à falta de tempo hábil.<br /><br />
+O frontend foi desenvolvido em NextJS utilizando a biblioteca Chakra UI para implementação dos componentes. O frontend consome todos os endpoints da API. Testes não implementados devido à falta de tempo hábil.<br /><br />
 
 
 ## Aprendizados:
