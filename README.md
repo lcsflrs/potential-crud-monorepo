@@ -2,11 +2,9 @@
 
 SPA desenvolvido para a implementação de um CRUD para o processo seletivo da Gazin.
 
-Site para acesso do Frontend:
-shorturl.at/bnwDE
+[Clique aqui para acessar o SPA](https://blissful-montalcini-cc1d8a.netlify.app/)
 
-Site para acesso da API:
-shorturl.at/bmwIV
+[Clique aqui para acessar a API](https://potential-crud.herokuapp.com/developers)
 
 ## Estruturação:
 Optei por desenvolver um projeto monorepo para facilitar a leitura e análise dele.<br />
