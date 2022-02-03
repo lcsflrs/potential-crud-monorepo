@@ -2,6 +2,12 @@
 
 SPA desenvolvido para a implementação de um CRUD para o processo seletivo da Gazin.
 
+Site para acesso do Frontend:
+shorturl.at/bnwDE
+
+Site para acesso da API:
+shorturl.at/bmwIV
+
 ## Estruturação:
 Optei por desenvolver um projeto monorepo para facilitar a leitura e análise dele.<br />
 Deploy da API feita através do Heroku e deploy do site feito usando Netlify.<br /><br />
